@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WELCOME TO LIST BUYER</title>
+    <title>WELCOME TO MY WEB</title>
     <style>
         * {
             box-sizing: border-box;
@@ -150,6 +150,12 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .photo-card:hover {
@@ -211,6 +217,35 @@
             border-radius: 4px;
         }
         
+        .real-time-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        
+        .real-time-indicator::before {
+            content: "";
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
         @media (max-width: 768px) {
             .gallery {
                 grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -254,15 +289,16 @@
         <!-- Konten setelah login -->
         <div id="contentSection" class="hidden">
             <header>
-                <h1>LIST AKUN DAN NAMA BUYER</h1>
-                <p class="subtitle">WELCOME TO LIST MY BUYER</p>
+                <h1>Galeri Foto Pembeli</h1>
+                <p class="subtitle">WELCOME TO BY WEB LIST BUYER</p>
+                <div class="real-time-indicator">REAL-TIME</div>
                 <button id="logoutBtn" class="logout-btn">Logout</button>
             </header>
 
             <div class="main-content">
                 <!-- Info Box -->
                 <div class="info-box">
-                    <strong>Info:</strong> welcome to list foto dan nama buyer axel 
+                    <strong>Info:</strong> WELCOME TO MY WEB
                 </div>
 
                 <!-- Form Upload Foto -->
@@ -358,12 +394,15 @@
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
-                    })
+                    }),
+                    time: new Date().toLocaleTimeString('id-ID')
                 };
                 
                 photos.push(photoData);
                 localStorage.setItem('buyerPhotos', JSON.stringify(photos));
-                renderGallery();
+                
+                // Render kartu foto baru secara real-time
+                addPhotoCard(photoData);
                 
                 // Tampilkan pesan sukses
                 uploadSuccess.classList.remove('hidden');
@@ -378,6 +417,24 @@
             reader.readAsDataURL(file);
         });
 
+        // Fungsi untuk menambahkan kartu foto secara real-time
+        function addPhotoCard(photoData) {
+            const photoCard = document.createElement('div');
+            photoCard.className = 'photo-card';
+            
+            photoCard.innerHTML = `
+                <img src="${photoData.imageData}" alt="Foto ${photoData.buyerName}">
+                <div class="photo-info">
+                    <h3>${photoData.buyerName}</h3>
+                    <p>Diupload: ${photoData.uploadDate} ${photoData.time}</p>
+                    <button class="delete-btn" onclick="deletePhoto(${photoData.id})">Hapus Foto</button>
+                </div>
+            `;
+            
+            // Tambahkan di awal galeri (agar foto terbaru muncul pertama)
+            gallery.insertBefore(photoCard, gallery.firstChild);
+        }
+
         // Fungsi render galeri
         function renderGallery() {
             gallery.innerHTML = '';
@@ -391,19 +448,7 @@
             const sortedPhotos = [...photos].sort((a, b) => b.id - a.id);
             
             sortedPhotos.forEach(photo => {
-                const photoCard = document.createElement('div');
-                photoCard.className = 'photo-card';
-                
-                photoCard.innerHTML = `
-                    <img src="${photo.imageData}" alt="Foto ${photo.buyerName}">
-                    <div class="photo-info">
-                        <h3>${photo.buyerName}</h3>
-                        <p>Diupload pada: ${photo.uploadDate}</p>
-                        <button class="delete-btn" onclick="deletePhoto(${photo.id})">Hapus Foto</button>
-                    </div>
-                `;
-                
-                gallery.appendChild(photoCard);
+                addPhotoCard(photo);
             });
         }
 
@@ -427,6 +472,20 @@
                 renderGallery();
             }
         });
+
+        // Simulasi notifikasi real-time (hanya untuk demo)
+        setInterval(() => {
+            if (!contentSection.classList.contains('hidden')) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('id-ID');
+                
+                // Update subtle indicator untuk menunjukkan koneksi real-time
+                const indicator = document.querySelector('.real-time-indicator');
+                if (indicator) {
+                    indicator.textContent = `REAL-TIME • ${timeString}`;
+                }
+            }
+        }, 1000);
     </script>
-</body> 
-</html>
+</body>
+                                            </html>
