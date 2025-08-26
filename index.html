@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME TO LIST BUYER</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .main-content {
+            padding: 30px;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus {
+            border-color: #4b6cb7;
+            outline: none;
+        }
+        
+        button {
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: opacity 0.3s;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        .upload-form {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .upload-form h2 {
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #4b6cb7;
+            padding-bottom: 10px;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .photo-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .photo-info {
+            padding: 15px;
+        }
+        
+        .photo-info h3 {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 1.2rem;
+        }
+        
+        .photo-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .delete-btn {
+            background: linear-gradient(90deg, #ff416c 0%, #ff4b2b 100%);
+            margin-top: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .error {
+            color: #ff4b2b;
+            margin-top: 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .success {
+            color: #4CAF50;
+            margin-top: 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #4b6cb7;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            header {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logout-btn {
+                position: relative;
+                margin-top: 15px;
+                right: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Form Login -->
+        <div id="loginSection" class="login-container">
+            <h2 style="text-align: center; margin-bottom: 20px; color: #4b6cb7;">Login Galeri Foto</h2>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Masukkan username (LIST)">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Masukkan password (PEMBELI)">
+            </div>
+            <button id="loginBtn">Login</button>
+            <p id="loginError" class="error hidden">Username atau password salah!</p>
+        </div>
+
+        <!-- Konten setelah login -->
+        <div id="contentSection" class="hidden">
+            <header>
+                <h1>LIST AKUN DAN NAMA BUYER</h1>
+                <p class="subtitle">WELCOME TO LIST MY BUYER</p>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </header>
+
+            <div class="main-content">
+                <!-- Info Box -->
+                <div class="info-box">
+                    <strong>Info:</strong> welcome to list foto dan nama buyer axel 
+                </div>
+
+                <!-- Form Upload Foto -->
+                <div class="upload-form">
+                    <h2>Upload Foto Baru</h2>
+                    <div class="form-group">
+                        <label for="buyerName">Nama Pembeli</label>
+                        <input type="text" id="buyerName" placeholder="Masukkan nama pembeli">
+                    </div>
+                    <div class="form-group">
+                        <label for="photoUpload">Pilih Foto</label>
+                        <input type="file" id="photoUpload" accept="image/*">
+                    </div>
+                    <button id="uploadBtn">Upload Foto</button>
+                    <p id="uploadSuccess" class="success hidden">Foto berhasil diupload!</p>
+                </div>
+
+                <!-- Galeri Foto -->
+                <h2 style="color: #333; margin-bottom: 20px;">Daftar Foto Pembeli</h2>
+                <div id="gallery" class="gallery">
+                    <!-- Foto akan ditampilkan di sini -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elemen DOM
+        const loginSection = document.getElementById('loginSection');
+        const contentSection = document.getElementById('contentSection');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const buyerNameInput = document.getElementById('buyerName');
+        const photoUploadInput = document.getElementById('photoUpload');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadSuccess = document.getElementById('uploadSuccess');
+        const gallery = document.getElementById('gallery');
+
+        // Data foto (disimpan di localStorage)
+        let photos = JSON.parse(localStorage.getItem('buyerPhotos')) || [];
+
+        // Fungsi login
+        loginBtn.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (username === 'LIST' && password === 'PEMBELI') {
+                // Login berhasil
+                loginSection.classList.add('hidden');
+                contentSection.classList.remove('hidden');
+                loginError.classList.add('hidden');
+                renderGallery();
+            } else {
+                // Login gagal
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        // Fungsi logout
+        logoutBtn.addEventListener('click', () => {
+            loginSection.classList.remove('hidden');
+            contentSection.classList.add('hidden');
+            usernameInput.value = '';
+            passwordInput.value = '';
+        });
+
+        // Fungsi upload foto
+        uploadBtn.addEventListener('click', () => {
+            const buyerName = buyerNameInput.value.trim();
+            const file = photoUploadInput.files[0];
+            
+            if (!buyerName) {
+                alert('Harap masukkan nama pembeli!');
+                return;
+            }
+            
+            if (!file) {
+                alert('Harap pilih foto!');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const photoData = {
+                    id: Date.now(), // ID unik berdasarkan timestamp
+                    buyerName: buyerName,
+                    imageData: e.target.result,
+                    uploadDate: new Date().toLocaleDateString('id-ID', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })
+                };
+                
+                photos.push(photoData);
+                localStorage.setItem('buyerPhotos', JSON.stringify(photos));
+                renderGallery();
+                
+                // Tampilkan pesan sukses
+                uploadSuccess.classList.remove('hidden');
+                setTimeout(() => {
+                    uploadSuccess.classList.add('hidden');
+                }, 3000);
+                
+                // Reset form
+                buyerNameInput.value = '';
+                photoUploadInput.value = '';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Fungsi render galeri
+        function renderGallery() {
+            gallery.innerHTML = '';
+            
+            if (photos.length === 0) {
+                gallery.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777;">Belum ada foto yang diupload.</p>';
+                return;
+            }
+            
+            // Urutkan foto berdasarkan ID terbaru (descending)
+            const sortedPhotos = [...photos].sort((a, b) => b.id - a.id);
+            
+            sortedPhotos.forEach(photo => {
+                const photoCard = document.createElement('div');
+                photoCard.className = 'photo-card';
+                
+                photoCard.innerHTML = `
+                    <img src="${photo.imageData}" alt="Foto ${photo.buyerName}">
+                    <div class="photo-info">
+                        <h3>${photo.buyerName}</h3>
+                        <p>Diupload pada: ${photo.uploadDate}</p>
+                        <button class="delete-btn" onclick="deletePhoto(${photo.id})">Hapus Foto</button>
+                    </div>
+                `;
+                
+                gallery.appendChild(photoCard);
+            });
+        }
+
+        // Fungsi hapus foto
+        window.deletePhoto = function(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus foto ini?')) {
+                photos = photos.filter(photo => photo.id !== id);
+                localStorage.setItem('buyerPhotos', JSON.stringify(photos));
+                renderGallery();
+            }
+        };
+
+        // Cek status login saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            // Untuk keperluan demo, selalu tampilkan form login saat halaman dimuat
+            loginSection.classList.remove('hidden');
+            contentSection.classList.add('hidden');
+            
+            // Jika ada data foto, render galeri
+            if (photos.length > 0) {
+                renderGallery();
+            }
+        });
+    </script>
+</body> 
+</html>
